@@ -1,2 +1,2 @@
-client/
-server/
+.gitignore
+node_modules
