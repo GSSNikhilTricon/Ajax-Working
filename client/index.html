@@ -5,58 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-    <script src="script.js"></script>
     <link rel="stylesheet" href="style.css">
-    <script>
-        //Increment count
-        function vote(option) {
-            var xhr = new XMLHttpRequest();
-            xhr.onreadystatechange = function() {
-                if (xhr.readyState == 4 && xhr.status == 200) {
-                    document.getElementById('msg').innerHTML = xhr.responseText;
-                    loadResults();
-                } 
-            };
-            xhr.open('POST', 'http://localhost:3000/vote', true);
-            xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
-            xhr.send(JSON.stringify({ vote: option }))
-        }
-
-        //Decrement count
-        function deleteVote(option) {
-            var xhr = new XMLHttpRequest();
-            xhr.onreadystatechange = function() {
-                if (xhr.readyState == 4 && xhr.status == 200) {
-                    document.getElementById('msg').innerHTML = xhr.responseText;
-                    loadResults();
-                }
-            };
-            xhr.open('DELETE', 'http://localhost:3000/vote', true);
-            xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
-            xhr.send(JSON.stringify({ vote: option }))
-        }
-
-        // To load the no. of votes for the options
-        function loadResults() {
-            var xhr = new XMLHttpRequest();
-            xhr.onreadystatechange = function() {
-                if (xhr.readyState == 4 && xhr.status == 200) {
-                    var results = JSON.parse(xhr.responseText)
-                    document.getElementById('result').innerHTML = `
-                        Option1: ${results.option1} votes<br>
-                        Option2: ${results.option2} votes
-                    ` ;
-                    console.log(results)
-                }
-            }
-            xhr.open('GET', 'http://localhost:3000/results', true);
-            xhr.send();
-        }
-
-        window.onload = function() {
-            loadResults();
-        };
-    </script>
 </head>
 <body>
     <div class="container">
@@ -77,5 +26,6 @@
             <div id="result"></div>
         </div>
     </div>
+    <script src="script.js"></script>
 </body>
 </html>

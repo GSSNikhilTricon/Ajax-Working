@@ -9,6 +9,10 @@ app.use(express.json())
 
 let votes = { option1: 0, option2: 0 }
 
+app.get('/', (req, res) => {
+    res.send('Successfully connected');
+})
+
 app.post('/vote', (req, res) => {
     const vote = req.body.vote;
     if (vote && votes[vote] !== undefined) {
