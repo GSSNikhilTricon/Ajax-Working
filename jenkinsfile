@@ -1,0 +1,51 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Checkout') {
+            steps {
+                echo '📦 Checking out code...'
+                git branch: 'main', url: 'https://github.com/GSSNikhilTricon/Ajax-Working.git'
+            }
+        }
+
+        stage('Install Dependencies') {
+            steps {
+                echo '🧰 Installing npm packages...'
+                dir('server') {
+                    sh 'npm install'
+                }
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                echo '🚀 Starting Node app...'
+                dir('server') {
+                    sh '''
+                        pkill -f server.js || true
+                        nohup node server.js > app.log 2>&1 &
+                    '''
+                }
+            }
+        }
+    }
+
+    post {
+        success {
+            emailext (
+                to: 'nikhilchowdarygarapati@gmail.com',
+                subject: "✅ Jenkins Build Success: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                body: "Good news! The build passed successfully.\n\n${env.BUILD_URL}"
+            )
+        }
+
+        failure {
+            emailext (
+                to: 'nikhilchowdarygarapati@gmail.com',
+                subject: "❌ Jenkins Build Failed: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                body: "Uh oh, something broke.\n\n${env.BUILD_URL}"
+            )
+        }
+    }
+}

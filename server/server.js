@@ -42,5 +42,8 @@ app.delete('/vote', (req, res) => {
 })
 
 app.listen(port, () => {
-    console.log(`Yep Server's On http://localhost:${port}`);
-})
+  console.log(`✅ Server running on http://localhost:${port}`);
+//   console.log(`🌎 APP_ENV: ${process.env.APP_ENV}`);
+//   console.log(`👋 GREETING: ${process.env.GREETING}`);
+//   console.log(`🔑 FAKE_KEY: ${process.env.FAKE_KEY}`);
+});
